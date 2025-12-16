@@ -8,18 +8,90 @@
     </head>
     <body>
         <div id="app">
-            <h1>{{message}}</h1>
+            <div v-html="getMessage()"></div>
+            <h2>{{stringToUpper("Functions too")}}</h2>
+            <p>{{someNumber}} is {{someNumber % 2 == 0 ? "even" : "odd"}}</p>
+            <p>Random ref value: {{refNumber}} {{updateNumber()}}</p>
+            <p v-once>Random ref value without update: {{refNumber}}</p>
+            <p>{{someObject.name}} is {{someObject.age}} years old</p>
+            <p>{{numbersArray[0]}}</p>
+            <a v-bind:href="someUrl">Link on Vue</a>
+
+            <h2>More Directives</h2>
+            <p v-show="someObject.hasCorporateCard">Visible or Invisible spending limit: {{someObject.spendingLimit}}</p>
+
+            <p v-if="someObject.hasCorporateCard">Render or not spending limit: {{someObject.spendingLimit}}</p>
+            <p v-else-if="someObject.salary > 15000 && someObject.yearsWithCompany > 1">Employee is elegible for a corporate card</p>
+            <p v-else="someObject.hasCorporateCard">Employee does not have a corporate card </p>
+
+            <p>
+                Display all numbers: <span v-for="(num, index) in numbersArray">({{index}}) {{num}} </span>
+            </p>
+            <ul>
+                <li v-for="project in someObject.projects">
+                    Project <b>{{project.name}}</b> with an estimate time of {{project.timeline}}
+                </li>
+            </ul>
+
+            <h3>Employee</h3>
+            <ul>
+                <li v-for="(value,key) in someObject">{{key}}: {{value}}</li>
+            </ul>
         </div>
     </body>
     <script>
-        const { createApp } = Vue;
+        const { createApp, ref, reactive } = Vue;
 
         createApp({
             setup(){
                 const message = "Hello Vue!";
+                const refNumber = ref(2);
+                const someNumber = 8;
+                const someObject = reactive({
+                    name: "John Snow",
+                    age: 31,
+                    salary: 29999,
+                    hasCorporateCard: false,
+                    spendingLimit: 10000,
+                    yearsWithCompany: 5,
+                    projects: [
+                        { name: "Green A", timeline: "2 years"},
+                        { name: "Blue 2", timeline: "32 weeks"},
+                        { name: "Yellow Gamma", timeline: "7 days"}
+                    ]
+                })
+                const numbersArray = [3,8,5,11,21];
+
+                const someUrl = "https://www.google.com/";
+
+
+                function stringToUpper(str) {
+                    return str.toUpperCase();
+                }
+
+                function updateNumber() {
+                    setTimeout(() =>{
+                        refNumber.value = Math.floor(Math.random()*10) + 1 ;
+                        someObject.age = someObject.age + Math.floor(Math.random()*10) + 1 ;
+                    }, 3000)
+                    
+                    return ;
+                }
+
+                function getMessage() {
+                    return `<h1>${message}</h1>`;
+                }
 
                 return{
                     message,
+                    someNumber,
+                    someObject,
+                    numbersArray,
+                    refNumber,
+                    someUrl,
+                    stringToUpper, 
+                    updateNumber,
+                    getMessage
                 };
             },
         }).mount("#app");
