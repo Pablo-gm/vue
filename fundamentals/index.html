@@ -29,7 +29,15 @@
             </p>
             <ul>
                 <li v-for="project in someObject.projects">
-                    Project <b>{{project.name}}</b> with an estimate time of {{project.timeline}}
+                    Project <b>{{project.name}}</b> with an estimate time of {{project.timeline}} 
+                </li>
+            </ul>
+
+            <h3>With keys</h3>
+            {{shuffleProjectsOrder()}}
+            <ul>
+                <li v-for="(project, index) in someObject.projects" :key="project.name">
+                    {{index+1}} - <b>{{project.name}}</b> with an estimate time of {{project.timeline}} <input type="text" />
                 </li>
             </ul>
 
@@ -82,6 +90,12 @@
                     return `<h1>${message}</h1>`;
                 }
 
+                function shuffleProjectsOrder(){
+                    setTimeout(()=>{
+                        someObject.projects.sort(() => Math.random()-0.5);
+                    }, 5000);
+                }
+
                 return{
                     message,
                     someNumber,
@@ -91,7 +105,8 @@
                     someUrl,
                     stringToUpper, 
                     updateNumber,
-                    getMessage
+                    getMessage,
+                    shuffleProjectsOrder
                 };
             },
         }).mount("#app");

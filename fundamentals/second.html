@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <h1> 
+                <span v-bind:style="{backgroundColor: 'aqua', fontSize: '40px'}">Hellow</span>
+                <span v-bind:style="{'background-color': 'purple', 'font-size': '40px'}">World</span>
+            </h1>
+            <p class="font-20" v-bind:class="{'text-orange': true}">Some example text</p>
+            <p class="font-20" v-bind:class="{'text-orange': 3 > 1 ? true : false}">Conditional text</p>
+            <p class="font-20" v-bind:style="someStyle">More style</p>
+        </div>
+    </body>
+    <script>
+        const { createApp, ref, reactive } = Vue;
+
+        const someStyle = {
+            fontSize: "40px",
+            backgroundColor: 'azure'
+        }
+
+        createApp({
+            setup(){
+                return{
+                    someStyle
+                };
+            },
+        }).mount("#app");
+    </script>
+    <style>
+        .font-20{
+            font-size: 20px;
+        }
+
+        .text-orange{
+            color: orange;
+        }
+    </style>
+</html>

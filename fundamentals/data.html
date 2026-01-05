@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    </head>
+    <body>
+        <div id="app">
+
+            <div>
+                <h1>Full name</h1>
+                <p>{{counter}} {{getFullname}}</p>
+                <button v-on:click="counter++">UP</button>
+                <button v-on:click="counter--">DOWN</button>
+                <br>
+                First name
+                <input type="text" v-model="firstName">
+            </div>
+            <div>
+                <h1>Data binding</h1>
+                <input type="text" v-model.trim="name">
+                <input type="number" v-model.number="age">
+                <p>{{name}} is {{age}} years old</p>
+            </div>
+
+            <input type="text" v-on:keyup.enter="pressEnter">
+            <div v-on:click="buttonClick('Vue on div', $event)">
+                <button v-on:click.stop="buttonClick('Vue on button', $event)">Click me</button>
+                <p>x = {{x}}</p>
+            </div>
+        </div>
+    </body>
+    <script>
+        const { createApp, ref, reactive, computed, watch } = Vue;
+
+        createApp({
+            setup(){
+
+                let counter = ref(0);
+                let firstName = ref("Monica");
+                let lastName = ref("Orkel");
+
+                watch(
+                    () => counter.value,
+                    (newValue, oldValue) => {
+                        console.log("Counter value changed from", oldValue, " to ", newValue);
+                        if(newValue == 5){
+                            alert("new value has reached 5");
+                        }
+                    }
+                );
+
+                const getFullname = computed((previous) => {
+                    console.log("fullname invoked from " + previous);
+                    return firstName.value + " " + lastName.value;
+                }); 
+
+                let name = ref("John");
+                let age = ref(30);
+
+                let x = ref(0)
+
+                function buttonClick(newMessage, event){
+                    x.value = event.x;
+                    alert(newMessage)
+                }
+
+                function pressEnter() {
+                    alert('Enter pressed')
+                }
+
+                return{
+                    counter,
+                    firstName,
+                    lastName,
+                    getFullname,
+                    name,
+                    age,
+                    x,
+                    buttonClick,
+                    pressEnter
+                };
+            },
+        }).mount("#app");
+    </script>
+
+</html>
