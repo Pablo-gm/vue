@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css"
+    >
+</head>
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="section is-medium has-text-centered">
+                <span class="is-size-2">{{icon}}</span>
+                <h1 class="is-size-1 has-text-weight-bold">{{header}}</h1>
+                <p class="mb-3">{{message}}</p>
+                <a href="#">{{linkMessage}}</a>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        const {createApp, ref} = Vue;
+        createApp({
+            setup() {
+                const icon = ref("🌌");
+                const header = ref("Page not found, error 404");
+                const message = ref("The url has no content available. Check the link again or try again later.");
+                const linkMessage = ref("Return to home");
+                return {icon,header,message,linkMessage}
+            }
+        }).mount("#app");
+    </script>
+</body>
+</html>
