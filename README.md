@@ -12,7 +12,7 @@ npm install
 
 ### Run JSON Server
 
-The server will run on http://localhost:8000 To change this, go to package.json and change the "server" script.
+The server will run on http://localhost:8000 To change this, go to package.json and change the "server" script plus vite.config file.
 
 ```bash
 npm run server
